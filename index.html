@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Início</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .info {
+            border: 1px solid;
+            padding: 10px;
+            margin: 10px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Cabeçalho -->
+    <div class="usuario container-fluid py-3">
+        <h3 class="ms-3">🚻 Nome do usuário</h3>
+    </div>
+    <hr>
+
+    <!-- Conteúdo -->
+    <div class="container-fluid mt-4">
+        <div class="row">
+            <!-- Menu lateral -->
+            <div id="menuLateral" class="col-lg-2 col-md-3 col-12 text-center mb-4">
+                <a href="telacomunidade.html">
+                    <img src="comunidades.png" class="img-fluid mb-2" alt="">
+                    <p>Comunidades</p>
+                </a>
+                <a href="telaGrupo.html">
+                    <img src="grupos.png" class="img-fluid mb-2" id="grupo" alt="">
+                    <p>Grupos</p>
+                </a>
+                <a href="">
+                    <img src="biblioteca.png" class="img-fluid mb-2" alt="">
+                    <p>Minha Biblioteca</p>
+                </a>
+                <img src="Logo trabalho.jpeg" class="logo mt-5" alt="Logo">
+            </div>
+
+            <!-- Conteúdo principal -->
+            <div class="col-lg-7 col-md-9 col-12 d-flex align-items-center flex-column">
+                <!-- Boas-vindas -->
+                <div id="boasVindas" class="text-center mb-4">
+                    <h1>Seja bem-vindo!</h1>
+                    <p>Pronto para continuar sua jornada de leitura?</p>
+                </div>
+
+                <!-- teste info -->
+                 <div style="display: flex; flex-direction: row;">
+                    <div class="info">Livros cadastrados:</div>
+                    <div class="info">Livros lidos:</div>
+                 </div>
+
+                <!-- Leitura em andamento -->
+                <div class="card mb-4">
+                    <h4>Leitura em andamento</h4>
+                    <div class="d-flex flex-wrap gap-3">
+                        <img src="https://m.media-amazon.com/images/I/71SYepTUsDL._AC_UF1000,1000_QL80_.jpg"
+                            class="img-fluid livro" alt="">
+                        <div class="flex-grow-1">
+                            <p><b>Título:</b> Vermelho, Branco e Sangue Azul</p>
+                            <p><b>Autor:</b> Casey McQuiston</p>
+                            <div class="progress">
+                                <div class="progress-bar bg-danger" style="width:60%">
+                                    60%
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                
+
+                
+            </div>
+
+            <!-- Imagem lateral -->
+            <div class="col-lg-3 d-none d-lg-block">
+                <img src="fundo.jpg" class="img-fluid imagemLateral" alt="Livros">
+            </div>
+
+        </div>
+
+    </div>
+
+</body>
+
+<script src="script.js"></script>
+
+</html>

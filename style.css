@@ -1,0 +1,191 @@
+body {
+    background-color: #F3DDC8;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.usuario {
+    font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+}
+
+#menuLateral {
+    padding: 5px;
+}
+
+#menuLateral a {
+    display: block;
+    color: black;
+    text-decoration: none;
+    margin-bottom: 15px;
+}
+
+#menuLateral p {
+    margin-top: 8px;
+    font-weight: bold;
+}
+
+#menuLateral img {
+    width: 80px;
+}
+
+#grupo {
+    width: 90px;
+}
+
+.logo {
+    width: 110px;
+    border-radius: 50%;
+    margin-top: 40px;
+}
+
+#boasVindas {
+    font-family: cursive;
+}
+
+.card {
+    border: 4px solid rgb(245, 59, 59);
+    border-radius: 20px;
+    padding: 5px;
+    background-color: #F3DDC8;
+    width: 100%;
+    max-width: 38rem;
+}
+
+.livro {
+    border-radius: 10px;
+    max-height: 220px;
+    height: 150px;
+}
+
+.progress {
+    height: 25px;
+    border-radius: 20px;
+}
+
+.progress-bar {
+    font-weight: bold;
+}
+
+.imagemLateral {
+    height: 100vh;
+    width: 100%;
+    object-fit: cover;
+    transform: rotate(180deg);
+}
+
+.estante {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+}
+
+.livro {
+    width: 120px;
+    height: 180px;
+    object-fit: cover;
+    border-radius: 10px;
+}
+
+.capa {
+    width: 120px;
+    height: 180px;
+    object-fit: cover;
+    border-radius: 10px;
+    max-width: 100%;
+}
+
+#abrir {
+    padding: 10px 20px;
+    cursor: pointer;
+}
+
+.janela,
+#janelaa,
+#janelaInformacoes {
+    display: none;
+
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+
+    width: 400px;
+    padding: 30px;
+
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+
+    z-index: 10;
+}
+
+#fechar {
+    cursor: pointer;
+}
+
+#livro {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+.livro {
+    width: 180px;
+}
+
+.capa {
+    width: 180px;
+    height: 250px;
+    cursor: pointer;
+}
+
+.capa img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 10px;
+}
+
+@media (max-width: 992px) {
+
+    #menuLateral {
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+        flex-wrap: wrap;
+        text-align: center;
+        margin-bottom: 30px;
+    }
+
+    .logo {
+        display: none;
+    }
+
+    #boasVindas h2 {
+        font-size: 2rem;
+    }
+
+}
+
+@media (max-width: 768px) {
+
+    #menuLateral img {
+        width: 60px;
+    }
+
+    #grupo {
+        width: 70px;
+    }
+
+    .livro {
+        height: 150px;
+    }
+
+    #boasVindas h2 {
+        font-size: 1.8rem;
+    }
+
+    #boasVindas p {
+        font-size: 1rem;
+    }
+
+}

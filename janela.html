@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Janela Flutuante</title>
+
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+
+    <style>
+        #abrir {
+            padding: 10px 20px;
+            cursor: pointer;
+        }
+
+        #janela {
+            display: none;
+
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+
+            width: 400px;
+            padding: 30px;
+
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+
+            z-index: 10;
+        }
+
+        #fechar {
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+<body>
+
+    <button id="abrir">Abrir janela</button>
+
+    <div id="janela">
+        <button id="fechar">X</button>
+
+        <h2>Minha janela</h2>
+        <p>Essa é uma janela flutuante!</p>
+    </div>
+
+    <script>
+        $("#abrir").click(function () {
+            $("#janela").show();
+        });
+
+        $("#fechar").click(function () {
+            $("#janela").hide();
+        });
+    </script>
+
+</body>
+
+</html>
