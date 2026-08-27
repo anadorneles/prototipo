@@ -8,9 +8,14 @@ body {
     font-family: Arial, sans-serif;
 }
 
+/* CABEÇALHO */
+
 .usuario {
     font-family: Impact, sans-serif;
 }
+
+
+/* MENU LATERAL */
 
 #menuLateral {
     padding: 5px;
@@ -18,8 +23,8 @@ body {
 
 #menuLateral a {
     display: block;
-    margin-bottom: 15px;
-    color: black;
+    margin-bottom: 20px;
+    color: #3d2920;
     text-decoration: none;
 }
 
@@ -29,11 +34,11 @@ body {
 }
 
 #menuLateral img {
-    width: 80px;
+    width: 70px;
 }
 
-#grupo {
-    width: 90px !important;
+#comunidade {
+    width: 80px !important;
 }
 
 .logo {
@@ -42,13 +47,20 @@ body {
     border-radius: 50%;
 }
 
+
+/* BOAS-VINDAS */
+
 #boasVindas {
     font-family: cursive;
 }
 
+
+/* ESTANTES */
+
 .card {
     width: 100%;
     max-width: 38rem;
+    margin: 0 auto 1rem;
     padding: 10px;
     background: #F3DDC8;
     border: 4px solid rgb(245, 59, 59);
@@ -62,20 +74,20 @@ body {
 .estante {
     display: flex;
     flex-wrap: wrap;
+    justify-content: center;
     gap: 15px;
 }
+
 
 /* LIVROS */
 
 .livro {
     width: 180px;
-    flex-shrink: 0;
 }
 
 .capa {
     width: 100%;
     height: 250px;
-    cursor: pointer;
 }
 
 .capa img {
@@ -85,6 +97,7 @@ body {
     object-fit: cover;
     border-radius: 10px;
 }
+
 
 /* LIVRO LENDO */
 
@@ -109,7 +122,8 @@ body {
     font-size: 14px;
 }
 
-/* BARRA */
+
+/* BARRA DE PROGRESSO */
 
 .barraProgresso {
     width: 100%;
@@ -126,11 +140,11 @@ body {
     align-items: center;
     justify-content: center;
     background: rgb(245, 59, 59);
-    border-radius: 10px;
     color: white;
     font-size: 12px;
     font-weight: bold;
 }
+
 
 /* IMAGEM LATERAL */
 
@@ -141,9 +155,10 @@ body {
     transform: rotate(180deg);
 }
 
+
 /* JANELAS */
 
-#cadastrar,
+#janelaEdicao,
 #janelaInformacoes {
     display: none;
     position: fixed;
@@ -161,34 +176,28 @@ body {
     z-index: 10;
 }
 
+
 /* FORMULÁRIO */
 
-#cadastrar div {
+#janelaEdicao div {
     margin-bottom: 10px;
     font-size: 15px;
     font-weight: bold;
 }
 
-#cadastrar input,
-#cadastrar select {
+#janelaEdicao input,
+#janelaEdicao select {
     width: 100%;
-    padding: 9px 10px;
+    padding: 9px;
     margin-top: 5px;
     border: 1px solid #aaa;
     border-radius: 6px;
-    font-size: 15px;
-    background: #fafafa;
 }
 
-#cadastrar input:focus,
-#cadastrar select:focus {
-    outline: none;
-    border-color: rgb(245, 59, 59);
-}
 
 /* BOTÕES */
 
-#cadastrar button,
+#janelaEdicao button,
 #janelaInformacoes button {
     padding: 9px 18px;
     margin-top: 8px;
@@ -208,7 +217,8 @@ body {
     background: #ddd;
 }
 
-/* TABLET */
+
+/* RESPONSIVIDADE */
 
 @media (max-width: 992px) {
 
@@ -217,16 +227,10 @@ body {
         justify-content: space-around;
         align-items: center;
         flex-wrap: wrap;
-        text-align: center;
-        margin-bottom: 30px;
     }
 
     .logo {
         display: none;
-    }
-
-    #boasVindas h1 {
-        font-size: 2rem;
     }
 
     .livro {
@@ -239,8 +243,6 @@ body {
     }
 }
 
-/* CELULAR */
-
 @media (max-width: 768px) {
 
     #menuLateral img {
@@ -251,27 +253,6 @@ body {
         width: 70px !important;
     }
 
-    #boasVindas h1 {
-        font-size: 1.8rem;
-    }
-
-    #cadastrar,
-    #janelaInformacoes {
-        width: 92vw;
-        padding: 18px;
-    }
-
-    #cadastrar div {
-        margin-bottom: 8px;
-        font-size: 14px;
-    }
-
-    #cadastrar input,
-    #cadastrar select {
-        padding: 8px;
-        font-size: 14px;
-    }
-
     .livro {
         width: 130px;
     }
@@ -280,15 +261,14 @@ body {
     .livroLendo .capa {
         height: 190px;
     }
+
+    #janelaEdicao,
+    #janelaInformacoes {
+        width: 92vw;
+    }
 }
 
-/* CELULAR PEQUENO */
-
 @media (max-width: 480px) {
-
-    .estante {
-        justify-content: center;
-    }
 
     .livro {
         width: 120px;
@@ -299,25 +279,8 @@ body {
         height: 175px;
     }
 
-    #cadastrar,
+    #janelaEdicao,
     #janelaInformacoes {
         width: 94vw;
-        padding: 15px;
-    }
-
-    #cadastrar div {
-        margin-bottom: 7px;
-        font-size: 13px;
-    }
-
-    #cadastrar input,
-    #cadastrar select {
-        padding: 7px;
-        font-size: 13px;
-    }
-
-    #cadastrar button,
-    #janelaInformacoes button {
-        padding: 8px 14px;
     }
 }
