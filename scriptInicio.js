@@ -1,98 +1,146 @@
 ///Script para salvar, editar, excluir e exibir dados dos livros
 
+// ABRIR CADASTRO
 $("#abrir").click(function () {
     $("#cadastrar").show();
 });
 
+
+// FECHAR CADASTRO
 $("#fechar").click(function () {
     $("#cadastrar").hide();
 });
 
+
+// SALVAR
 $("#salvar").click(function () {
-    alert('Livro salvo com sucesso!')
     salvar();
 });
 
-var cont = parseInt(localStorage.getItem('valor')) || 0;
+
+var cont = parseInt(localStorage.getItem("valor")) || 0;
+var livroAtual = 0;
 var editando = false;
 
+
+// CALCULAR PROGRESSO
+function calcularProgresso(paginas, paginasLidas) {
+
+    paginas = parseInt(paginas) || 0;
+    paginasLidas = parseInt(paginasLidas) || 0;
+
+    if (paginas <= 0) {
+        return 0;
+    }
+
+    let porcentagem = (paginasLidas / paginas) * 100;
+
+    if (porcentagem > 100) {
+        porcentagem = 100;
+    }
+
+    if (porcentagem < 0) {
+        porcentagem = 0;
+    }
+
+    return Math.round(porcentagem);
+}
+
+
+// CRIAR LIVRO
+function criarLivro(id, livro) {
+
+    let porcentagem = calcularProgresso(livro.paginas, livro.paginasLidas);
+
+    let capa = `
+        <div class="capa" onclick="mostrarLivro(${id})">
+            <img src="${livro.imagem}" alt="Capa do livro">
+        </div>
+    `;
+
+    if (livro.status == "Lendo") {
+        return `
+            <div class="livroLendo livro" id="livro${id}">
+                ${capa}
+                <div class="informacoesLendo">
+                    <p><strong>Nome:</strong> ${livro.nome}</p>
+                    <p><strong>Autor:</strong> ${livro.autor}</p>
+                    <p><strong>Páginas:</strong> ${livro.paginas}</p>
+                    <p><strong>Páginas concluídas:</strong> ${livro.paginasLidas}</p>
+                    <div class="barraProgresso">
+                        <div class="barraProgressoPreenchida" style="width:${porcentagem}%;">
+                            ${porcentagem}%
+                        </div>
+                    </div>
+                </div>
+            </div>
+        `;
+    }
+
+    return `<div class="livro" id="livro${id}">${capa}</div>`;
+}
+
+// SALVAR OU EDITAR
 function salvar() {
 
-    let nome = $("#nomeLivro").val();
-    let autor = $("#autorLivro").val();
-    let editora = $("#editoraLivro").val();
-    let paginas = $("#paginasLivro").val();
-    let genero = $("#generoLivro").val();
-    let status = $("#statusLivro").val();
-    let imagem = $("#imagem").val();
-
     let livro = {
-        nome: nome,
-        autor: autor,
-        editora: editora,
-        paginas: paginas,
-        genero: genero,
-        status: status,
-        imagem: imagem
+        nome: $("#nomeLivro").val(),
+        autor: $("#autorLivro").val(),
+        editora: $("#editoraLivro").val(),
+        paginas: $("#paginasLivro").val(),
+        paginasLidas: $("#paginasLidas").val(),
+        genero: $("#generoLivro").val(),
+        status: $("#statusLivro").val(),
+        imagem: $("#imagem").val()
     };
 
     let livroJSON = JSON.stringify(livro);
 
-    // SE ESTIVER EDITANDO
     if (editando) {
 
-        // Atualiza o livro no localStorage
-        localStorage.setItem("livro" + livroAtual, livroJSON);
+        localStorage.setItem(
+            "livro" + livroAtual,
+            livroJSON
+        );
 
-        // Remove o livro da estante antiga
         $("#livro" + livroAtual).remove();
 
-        // Adiciona novamente na estante correta
-        var modelo =
-            '<div class="livro" id="livro' + livroAtual + '">' +
-            '<div class="capa" onclick="mostrarLivro(' + livroAtual + ')">' +
-            '<img src="' + imagem + '">' +
-            '</div>' +
-            '</div>';
+        let modelo = criarLivro(livroAtual, livro);
 
-        if (status == "Lendo") {
+        if (livro.status == "Lendo") {
             $("#lendo").append(modelo);
         }
 
-        if (status == "Quero Ler") {
+        if (livro.status == "Quero Ler") {
             $("#queroLer").append(modelo);
         }
 
-        if (status == "Lido") {
+        if (livro.status == "Lido") {
             $("#lidos").append(modelo);
         }
 
         editando = false;
-    }
 
-    // SE FOR UM NOVO LIVRO
-    else {
+    } else {
 
-        var modelo =
-            '<div class="livro" id="livro' + cont + '">' +
-            '<div class="capa" onclick="mostrarLivro(' + cont + ')">' +
-            '<img src="' + imagem + '">' +
-            '</div>' +
-            '</div>';
+        localStorage.setItem(
+            "livro" + cont,
+            livroJSON
+        );
 
-        if (status == "Lendo") {
+        let modelo = criarLivro(cont, livro);
+
+        if (livro.status == "Lendo") {
             $("#lendo").append(modelo);
         }
 
-        if (status == "Quero Ler") {
+        if (livro.status == "Quero Ler") {
             $("#queroLer").append(modelo);
         }
 
-        if (status == "Lido") {
+        if (livro.status == "Lido") {
             $("#lidos").append(modelo);
         }
-
-        localStorage.setItem("livro" + cont, livroJSON);
 
         cont++;
 
@@ -102,30 +150,38 @@ function salvar() {
     $("#cadastrar").hide();
 }
 
+
+// EDITAR
 $("#editar").click(function () {
 
-    let livroJSON = localStorage.getItem("livro" + livroAtual);
+    let livroJSON = localStorage.getItem(
+        "livro" + livroAtual
+    );
 
-    if (livroJSON) {
-
-        let livro = JSON.parse(livroJSON);
-
-        $("#nomeLivro").val(livro.nome);
-        $("#autorLivro").val(livro.autor);
-        $("#editoraLivro").val(livro.editora);
-        $("#paginasLivro").val(livro.paginas);
-        $("#generoLivro").val(livro.genero);
-        $("#statusLivro").val(livro.status);
-        $("#imagem").val(livro.imagem);
-
-        editando = true;
-
-        $("#janelaInformacoes").hide();
-        $("#cadastrar").show();
+    if (!livroJSON) {
+        return;
     }
+
+    let livro = JSON.parse(livroJSON);
+
+    $("#nomeLivro").val(livro.nome);
+    $("#autorLivro").val(livro.autor);
+    $("#editoraLivro").val(livro.editora);
+    $("#paginasLivro").val(livro.paginas);
+    $("#paginasLidas").val(livro.paginasLidas);
+    $("#generoLivro").val(livro.genero);
+    $("#statusLivro").val(livro.status);
+    $("#imagem").val(livro.imagem);
+
+    editando = true;
+
+    $("#janelaInformacoes").hide();
+    $("#cadastrar").show();
 });
 
-$(document).ready(function buscar() {
+
+// BUSCAR LIVROS
+$(document).ready(function () {
 
     let limite = parseInt(localStorage.getItem("valor")) || 0;
 
@@ -133,328 +189,261 @@ $(document).ready(function buscar() {
 
         let livroJSON = localStorage.getItem("livro" + i);
 
-        if (livroJSON) {
+        if (!livroJSON) {
+            continue;
+        }
 
-            let livro = JSON.parse(livroJSON);
+        let livro = JSON.parse(livroJSON);
+        let modelo = criarLivro(i, livro);
 
-            let modelo =
-                '<div class="livro" id="livro' + i + '">' +
-                '<div class="capa" onclick="mostrarLivro(' + i + ')">' +
-                '<img src="' + livro.imagem + '">' +
-                '</div>' +
-                '</div>';
+        if (livro.status == "Lendo") {
+            $("#lendo").append(modelo);
+        }
 
-            if (livro.status == "Lendo") {
-                $("#lendo").append(modelo);
-            }
+        if (livro.status == "Quero Ler") {
+            $("#queroLer").append(modelo);
+        }
 
-            if (livro.status == "Quero Ler") {
-                $("#queroLer").append(modelo);
-            }
-
-            if (livro.status == "Lido") {
-                $("#lidos").append(modelo);
-            }
+        if (livro.status == "Lido") {
+            $("#lidos").append(modelo);
         }
     }
 });
 
 
-var livroAtual = 0;
-
+// MOSTRAR INFORMAÇÕES
 function mostrarLivro(id) {
 
     livroAtual = id;
 
-    // Pega o livro do localStorage
-    let livroJSON = localStorage.getItem("livro" + id);
+    let livroJSON = localStorage.getItem(
+        "livro" + id
+    );
 
-    // Verifica se o livro existe
-    if (livroJSON) {
-
-        // Transforma JSON em objeto
-        let livro = JSON.parse(livroJSON);
-
-        // Coloca as informações na janela
-        $("#infoNome").text(livro.nome);
-        $("#infoAutor").text(livro.autor);
-        $("#infoEditora").text(livro.editora);
-        $("#infoPaginas").text(livro.paginas);
-        $("#infoGenero").text(livro.genero);
-        $("#infoStatus").text(livro.status);
-
-        // Mostra a janela
-        $("#janelaInformacoes").show();
+    if (!livroJSON) {
+        return;
     }
+
+    let livro = JSON.parse(livroJSON);
+
+    $("#infoNome").text(livro.nome);
+    $("#infoAutor").text(livro.autor);
+    $("#infoEditora").text(livro.editora);
+    $("#infoPaginas").text(livro.paginas);
+    $("#infoPaginasLidas").text(livro.paginasLidas);
+    $("#infoGenero").text(livro.genero);
+    $("#infoStatus").text(livro.status);
+
+    $("#janelaInformacoes").show();
 }
 
+
+// FECHAR INFORMAÇÕES
 $("#fecharInformacoes").click(function () {
     $("#janelaInformacoes").hide();
 });
 
+
+// EXCLUIR
 function deletar() {
 
-    $('#livro' + livroAtual).remove();
+    $("#livro" + livroAtual).remove();
 
-    localStorage.removeItem('livro' + livroAtual);
+    localStorage.removeItem(
+        "livro" + livroAtual
+    );
 
     $("#janelaInformacoes").hide();
 }
-
 /*
-// ======================================================
-// EDITAR LIVRO
-// ======================================================
-
 $("#editar").click(function () {
 
-    // Pega o livro selecionado
     let livroJSON = localStorage.getItem("livro" + livroAtual);
 
     if (livroJSON) {
 
         let livro = JSON.parse(livroJSON);
 
-        // Preenche os campos com os dados do livro
         $("#nomeLivro").val(livro.nome);
         $("#autorLivro").val(livro.autor);
         $("#editoraLivro").val(livro.editora);
         $("#paginasLivro").val(livro.paginas);
+        $("#paginasLidas").val(livro.paginasLidas);
         $("#generoLivro").val(livro.genero);
         $("#statusLivro").val(livro.status);
         $("#imagem").val(livro.imagem);
 
-        // Fecha a janela de informações
         $("#janelaInformacoes").hide();
-
-        // Abre a janela de edição
         $("#cadastrar").show();
     }
 });
 
 
-// ======================================================
-// SALVAR ALTERAÇÕES
-// ======================================================
-
 $("#salvar").click(function () {
-
     exibir();
-
 });
 
 
-// ======================================================
-// FUNÇÃO PARA ATUALIZAR O LIVRO
-// ======================================================
+function calcularProgresso(paginas, paginasLidas) {
 
-function exibir() {
+    paginas = parseInt(paginas) || 0;
+    paginasLidas = parseInt(paginasLidas) || 0;
 
-    // Pega os valores dos campos
-    let nome = $("#nomeLivro").val();
-    let autor = $("#autorLivro").val();
-    let editora = $("#editoraLivro").val();
-    let paginas = $("#paginasLivro").val();
-    let genero = $("#generoLivro").val();
-    let status = $("#statusLivro").val();
-    let imagem = $("#imagem").val();
+    if (paginas <= 0) {
+        return 0;
+    }
 
-    // Cria o objeto livro
-    let livro = {
+    let porcentagem = (paginasLidas / paginas) * 100;
 
-        nome: nome,
-        autor: autor,
-        editora: editora,
-        paginas: paginas,
-        genero: genero,
-        status: status,
-        imagem: imagem
+    if (porcentagem > 100) {
+        porcentagem = 100;
+    }
 
-    };
+    if (porcentagem < 0) {
+        porcentagem = 0;
+    }
 
-    // Transforma o objeto em JSON
-    let livroJSON = JSON.stringify(livro);
-
-    // Atualiza o livro no localStorage
-    localStorage.setItem("livro" + livroAtual, livroJSON);
+    return Math.round(porcentagem);
+}
 
 
-    // ==================================================
-    // REMOVE O LIVRO DA ESTANTE ANTIGA
-    // ==================================================
-
-    $("#livro" + livroAtual).remove();
-
-
-    // ==================================================
-    // CRIA NOVAMENTE A CAPA
-    // ==================================================
+function criarLivro(id, livro) {
 
     let modelo =
-        '<div class="livro" id="livro' + livroAtual + '">' +
-            '<div class="capa" onclick="mostrarLivro(' + livroAtual + ')">' +
-                '<img src="' + imagem + '">' +
+        '<div class="livro" id="livro' + id + '">' +
+            '<div class="capa" onclick="mostrarLivro(' + id + ')">' +
+                '<img src="' + livro.imagem + '">' +
             '</div>' +
         '</div>';
 
+    if (livro.status == "Lendo") {
 
-    // ==================================================
-    // COLOCA NA ESTANTE CORRETA
-    // ==================================================
+        let porcentagem = calcularProgresso(
+            livro.paginas,
+            livro.paginasLidas
+        );
 
-    if (status == "Lendo") {
-
-        $("#lendo").append(modelo);
-
+        modelo =
+            '<div class="livro" id="livro' + id + '">' +
+                '<div class="capa" onclick="mostrarLivro(' + id + ')">' +
+                    '<img src="' + livro.imagem + '">' +
+                '</div>' +
+                '<div class="barraProgresso">' +
+                    '<div class="barraProgressoPreenchida" style="width:' + porcentagem + '%;">' +
+                        porcentagem + '%' +
+                    '</div>' +
+                '</div>' +
+            '</div>';
     }
 
-    if (status == "Quero Ler") {
-
-        $("#queroLer").append(modelo);
-
-    }
-
-    if (status == "Lido") {
-
-        $("#lidos").append(modelo);
-
-    }
-
-
-    // Fecha a janela de edição
-    $("#cadastrar").hide();
-
+    return modelo;
 }
 
 
-// ======================================================
-// BUSCAR LIVROS SALVOS
-// ======================================================
+function exibir() {
 
-$(document).ready(function buscar() {
+    let livro = {
+        nome: $("#nomeLivro").val(),
+        autor: $("#autorLivro").val(),
+        editora: $("#editoraLivro").val(),
+        paginas: $("#paginasLivro").val(),
+        paginasLidas: $("#paginasLidas").val(),
+        genero: $("#generoLivro").val(),
+        status: $("#statusLivro").val(),
+        imagem: $("#imagem").val()
+    };
 
-    // Pega a quantidade de livros salvos
+    localStorage.setItem(
+        "livro" + livroAtual,
+        JSON.stringify(livro)
+    );
+
+    $("#livro" + livroAtual).remove();
+
+    let modelo = criarLivro(livroAtual, livro);
+
+    if (livro.status == "Lendo") {
+        $("#lendo").append(modelo);
+    }
+
+    if (livro.status == "Quero Ler") {
+        $("#queroLer").append(modelo);
+    }
+
+    if (livro.status == "Lido") {
+        $("#lidos").append(modelo);
+    }
+
+    $("#cadastrar").hide();
+}
+
+
+$(document).ready(function () {
+
     let limite = parseInt(localStorage.getItem("valor")) || 0;
 
-
-    // Percorre os livros
     for (let i = 0; i < limite; i++) {
 
         let livroJSON = localStorage.getItem("livro" + i);
 
-
-        // Verifica se o livro existe
         if (livroJSON) {
 
-            // Converte JSON para objeto
             let livro = JSON.parse(livroJSON);
+            let modelo = criarLivro(i, livro);
 
-
-            // Cria a capa
-            let modelo =
-                '<div class="livro" id="livro' + i + '">' +
-                    '<div class="capa" onclick="mostrarLivro(' + i + ')">' +
-                        '<img src="' + livro.imagem + '">' +
-                    '</div>' +
-                '</div>';
-
-
-            // Coloca o livro na estante correspondente
             if (livro.status == "Lendo") {
-
                 $("#lendo").append(modelo);
-
             }
 
             if (livro.status == "Quero Ler") {
-
                 $("#queroLer").append(modelo);
-
             }
 
             if (livro.status == "Lido") {
-
                 $("#lidos").append(modelo);
-
             }
-
         }
-
     }
-
 });
 
-
-// ======================================================
-// LIVRO ATUAL
-// ======================================================
 
 var livroAtual = 0;
 
 
-// ======================================================
-// MOSTRAR INFORMAÇÕES DO LIVRO
-// ======================================================
-
 function mostrarLivro(id) {
 
-    // Guarda o ID do livro clicado
     livroAtual = id;
 
-
-    // Pega o livro no localStorage
     let livroJSON = localStorage.getItem("livro" + id);
 
-
-    // Verifica se o livro existe
     if (livroJSON) {
 
-        // Converte JSON para objeto
         let livro = JSON.parse(livroJSON);
 
-
-        // Coloca as informações na janela
         $("#infoNome").text(livro.nome);
         $("#infoAutor").text(livro.autor);
         $("#infoEditora").text(livro.editora);
         $("#infoPaginas").text(livro.paginas);
+        $("#infoPaginasLidas").text(livro.paginasLidas);
         $("#infoGenero").text(livro.genero);
         $("#infoStatus").text(livro.status);
 
-
-        // Mostra a janela de informações
         $("#janelaInformacoes").show();
-
     }
-
 }
 
 
-// ======================================================
-// FECHAR JANELA DE INFORMAÇÕES
-// ======================================================
-
 $("#fecharInformacoes").click(function () {
-
     $("#janelaInformacoes").hide();
-
 });
 
 
-// ======================================================
-// EXCLUIR LIVRO
-// ======================================================
-
 function deletar() {
 
-    // Remove a capa da tela
     $("#livro" + livroAtual).remove();
 
-    // Remove o livro do localStorage
     localStorage.removeItem("livro" + livroAtual);
 
-    // Fecha a janela de informações
     $("#janelaInformacoes").hide();
-
 }
 */
