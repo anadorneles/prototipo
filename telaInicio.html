@@ -7,7 +7,9 @@
     <title>Início</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
     <link rel="stylesheet" href="styleInicio.css">
+
 </head>
 
 <body>
@@ -21,92 +23,165 @@
     <!-- Conteúdo -->
     <div class="container-fluid mt-4">
         <div class="row">
+
             <!-- Menu lateral -->
             <div id="menuLateral" class="col-lg-2 col-md-3 col-12 text-center mb-4">
-                <a href="telacomunidade.html">
+
+                <a href="telaInicio.html">
+                    <img src="início.png" class="img-fluid mb-2" alt="">
+                    <p>Início</p>
+                </a>
+                
+                <a href="telaComunidade.html">
                     <img src="comunidades.png" class="img-fluid mb-2" alt="">
                     <p>Comunidades</p>
                 </a>
+
                 <a href="telaGrupo.html">
                     <img src="grupos.png" class="img-fluid mb-2" id="grupo" alt="">
                     <p>Grupos</p>
                 </a>
+
                 <a href="">
                     <img src="biblioteca.png" class="img-fluid mb-2" alt="">
                     <p>Minha Biblioteca</p>
                 </a>
+
                 <img src="Logo trabalho.jpeg" class="logo mt-5" alt="Logo">
+
             </div>
 
+
             <!-- Conteúdo principal -->
-            <div class="col-lg-7 col-md-9 col-12 d-flex align-items-center flex-column">
+            <div class="col-lg-7 col-md-9 col-12">
+
                 <!-- Boas-vindas -->
                 <div id="boasVindas" class="text-center mb-4">
                     <h1>Seja bem-vindo!</h1>
                     <p>Pronto para continuar sua jornada de leitura?</p>
                 </div>
 
+
                 <!-- Leitura em andamento -->
                 <div class="card mb-4">
+
                     <h4>Leitura em andamento</h4>
-                    <div class="d-flex flex-wrap gap-3">
-                        <img src="https://m.media-amazon.com/images/I/71SYepTUsDL._AC_UF1000,1000_QL80_.jpg"
-                            class="img-fluid livro" alt="">
-                        <div class="flex-grow-1">
-                            <p><b>Título:</b> Vermelho, Branco e Sangue Azul</p>
-                            <p><b>Autor:</b> Casey McQuiston</p>
-                            <div class="progress">
-                                <div class="progress-bar bg-danger" style="width:60%">
-                                    60%
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+
+                    <div id="lendo" class="estante"></div>
+
                 </div>
+
 
                 <!-- Fila de leitura -->
                 <div class="card mb-4">
+
                     <h4>Fila de Leitura</h4>
-                    <div class="d-flex flex-wrap gap-3">
-                        <img src="https://m.media-amazon.com/images/I/81FH6q0EqYS._AC_UF1000,1000_QL80_.jpg"
-                            class="img-fluid livro" alt="">
-                        <img src="https://m.media-amazon.com/images/I/91ZGYo9nx0L._UF1000,1000_QL80_.jpg"
-                            class="img-fluid livro" alt="">
-                        <img src="https://m.media-amazon.com/images/I/911VeZWLwTL._UF1000,1000_QL80_.jpg"
-                            class="img-fluid livro" alt="">
-                        <img src="https://m.media-amazon.com/images/I/81DQMKmWvCL._UF1000,1000_QL80_.jpg"
-                            class="img-fluid livro" alt="">
-                        <img src="https://m.media-amazon.com/images/I/81ewgI0ylSL._UF1000,1000_QL80_.jpg"
-                            class="img-fluid livro" alt="">
-                    </div>
+
+                    <div id="queroLer" class="estante"></div>
+
                 </div>
 
-                <!-- Mais populares -->
+
+                <!-- Livros lidos -->
                 <div class="card mb-4">
-                    <h3>Mais populares</h3>
-                    <div class="d-flex flex-wrap gap-3">
-                        <img src="https://m.media-amazon.com/images/I/91915km0UdL.jpg" class="img-fluid livro" alt="">
-                        <img src="https://m.media-amazon.com/images/I/51OYESeM8eL._AC_UF1000,1000_QL80_.jpg"
-                            class="img-fluid livro" alt="">
-                        <img src="https://m.media-amazon.com/images/I/81DkKVIavBL._AC_UF1000,1000_QL80_.jpg"
-                            class="img-fluid livro" alt="">
-                        <img src="https://m.media-amazon.com/images/I/81YQua9Mt5L._UF1000,1000_QL80_.jpg"
-                            class="img-fluid livro" alt="">
-                        <img src="https://m.media-amazon.com/images/I/71dsFCsDGYL._UF1000,1000_QL80_.jpg"
-                            class="img-fluid livro" alt="">
-                    </div>
+
+                    <h4>Livros lidos</h4>
+
+                    <div id="lidos" class="estante"></div>
+
                 </div>
+
             </div>
+
 
             <!-- Imagem lateral -->
             <div class="col-lg-3 d-none d-lg-block">
+
                 <img src="fundo.jpg" class="img-fluid imagemLateral" alt="Livros">
+
             </div>
 
         </div>
 
-    </div>
+        <!-- Abrir janela de edição -->
+        <div id="janelaEdicao">
+
+            <div>
+                Nome do livro:
+                <input type="text" id="nomeLivro">
+            </div>
+
+            <div>
+                Autor do livro:
+                <input type="text" id="autorLivro">
+            </div>
+
+            <div>
+                Editora:
+                <input type="text" id="editoraLivro">
+            </div>
+
+            <div>
+                Número de páginas do livro:
+                <input type="number" id="paginasLivro">
+            </div>
+
+            <div>
+                Número de páginas lidas do livro:
+                <input type="number" id="paginasLidas">
+            </div>
+
+            <div>
+                Gênero:
+                <input type="text" id="generoLivro">
+            </div>
+
+            <div>
+                Status de leitura:
+                <select id="statusLivro">
+                    <option value="Quero Ler">Quero Ler</option>
+                    <option value="Lendo">Lendo</option>
+                    <option value="Lido">Lido</option>
+                </select>
+            </div>
+
+            <div>
+                URL da capa do livro
+                <input type="url" id="imagem">
+            </div>
+
+            <button type="button" id="fechar">Fechar</button>
+            <button type="button" id="salvar">Salvar</button>
+
+        </div>
+
+        <!-- Abrir janela de dados e edição -->
+        <div id="janelaInformacoes">
+
+            <h2>Informações do livro</h2>
+
+            <p>Nome: <span id="infoNome"></span></p>
+
+            <p>Autor: <span id="infoAutor"></span></p>
+
+            <p>Editora: <span id="infoEditora"></span></p>
+
+            <p>Páginas: <span id="infoPaginas"></span></p>
+
+            <p>Páginas lidas: <span id="infoPaginasLidas"></span></p>
+
+            <p>Gênero: <span id="infoGenero"></span></p>
+
+            <p>Status: <span id="infoStatus"></span></p>
+
+            <button id="fecharInformacoes">Fechar</button>
+            <button id="editar">Editar</button>
+            <button type="button" onclick="deletar()">Excluir</button>
+
+        </div>
 
 </body>
+
+<script src="scriptInicio.js"></script>
 
 </html>
