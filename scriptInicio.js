@@ -16,7 +16,7 @@ $("#editar").click(function () {
         $("#imagem").val(livro.imagem);
 
         $("#janelaInformacoes").hide();
-        $("#cadastrar").show();
+        $("#janelaEdicao").show();
     }
 });
 
@@ -50,35 +50,19 @@ function calcularProgresso(paginas, paginasLidas) {
 
 
 function criarLivro(id, livro) {
+    let p = calcularProgresso(livro.paginas, livro.paginasLidas);
+    let capa = `<div class="capa" onclick="mostrarLivro(${id})"><img src="${livro.imagem}" alt="Capa"></div>`;
 
-    let modelo =
-        '<div class="livro" id="livro' + id + '">' +
-            '<div class="capa" onclick="mostrarLivro(' + id + ')">' +
-                '<img src="' + livro.imagem + '">' +
-            '</div>' +
-        '</div>';
+    if (livro.status == "Lendo")
+        return `<div class="livroLendo" id="livro${id}">${capa}<div class="informacoesLendo">
+        <p><strong>Nome:</strong> ${livro.nome}</p>
+        <p><strong>Autor:</strong> ${livro.autor}</p>
+        <p><strong>Páginas:</strong> ${livro.paginas}</p>
+        <p><strong>Páginas concluídas:</strong> ${livro.paginasLidas}</p>
+        <div class="barraProgresso"><div class="barraProgressoPreenchida" style="width:${p}%">${p}%</div></div>
+        </div></div>`;
 
-    if (livro.status == "Lendo") {
-
-        let porcentagem = calcularProgresso(
-            livro.paginas,
-            livro.paginasLidas
-        );
-
-        modelo =
-            '<div class="livro" id="livro' + id + '">' +
-                '<div class="capa" onclick="mostrarLivro(' + id + ')">' +
-                    '<img src="' + livro.imagem + '">' +
-                '</div>' +
-                '<div class="barraProgresso">' +
-                    '<div class="barraProgressoPreenchida" style="width:' + porcentagem + '%;">' +
-                        porcentagem + '%' +
-                    '</div>' +
-                '</div>' +
-            '</div>';
-    }
-
-    return modelo;
+    return `<div class="livro" id="livro${id}">${capa}</div>`;
 }
 
 
@@ -116,7 +100,7 @@ function exibir() {
         $("#lidos").append(modelo);
     }
 
-    $("#cadastrar").hide();
+    $("#janelaEdicao").hide();
 }
 
 
@@ -153,7 +137,7 @@ var livroAtual = 0;
 
 
 function mostrarLivro(id) {
-
+    
     livroAtual = id;
 
     let livroJSON = localStorage.getItem("livro" + id);
@@ -177,6 +161,10 @@ function mostrarLivro(id) {
 
 $("#fecharInformacoes").click(function () {
     $("#janelaInformacoes").hide();
+});
+
+$("#fechar").click(function () {
+    $("#janelaEdicao").hide();
 });
 
 
