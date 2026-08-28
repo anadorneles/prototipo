@@ -20,11 +20,19 @@ $("#editar").click(function () {
     }
 });
 
-
 $("#salvar").click(function () {
     exibir();
 });
 
+$(document).ready(function () {
+
+    let usuarioJSON = localStorage.getItem("usuarioAtual");
+
+    if (usuarioJSON) {
+        let usuario = JSON.parse(usuarioJSON);
+        $("#nomeUsuario").text(usuario.usuario);
+    }
+});
 
 function calcularProgresso(paginas, paginasLidas) {
 
