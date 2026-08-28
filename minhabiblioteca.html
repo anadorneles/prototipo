@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link rel="stylesheet" href="styleBiblioteca.css">
+    <style>
+        #banner {
+            height: 150px;
+            background-color: #7c0116;
+            border: 5px solid #e0a4b0;
+            border-radius: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+        }
+        
+        .botoes {
+            width: 100px;
+            background-color: #f8ccd7;
+            border-radius: 20px;
+        }
+        
+        #biblioteca {
+            border: 2px solid #7c0116;
+            width: auto auto;
+            height: auto auto;
+        }
+        
+        #textoBanner {
+            color: white;
+            margin: 0;
+        }
+        
+        .estadoLeitura {
+            display: flex;
+            justify-content: flex-end;
+            gap: 10px;
+            width: auto;
+        }
+        
+        body {
+            background-color: #F3DDC8;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+        
+        .usuario {
+            font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+        }
+        
+        #menuLateral {
+            padding: 5px;
+        }
+        
+        #menuLateral a {
+            display: block;
+            color: black;
+            text-decoration: none;
+            margin-bottom: 15px;
+        }
+        
+        #menuLateral p {
+            margin-top: 8px;
+            font-weight: bold;
+        }
+        
+        #menuLateral img {
+            width: 80px;
+        }
+        
+        #grupo {
+            width: 90px;
+        }
+        
+        .logo {
+            width: 110px;
+            border-radius: 50%;
+            margin-top: 40px;
+        }
+        
+        .livro {
+            border-radius: 10px;
+            max-height: 220px;
+            height: 150px;
+        }
+        
+        .progress {
+            height: 25px;
+            border-radius: 20px;
+        }
+        
+        .progress-bar {
+            font-weight: bold;
+        }
+        
+        #cadastro {
+            position: absolute;
+            right: 15px;
+            bottom: 10px;
+            width: 90px;
+            font-size: 12px;
+        }
+    </style>
+</head>
+
+
+<body>
+
+    <div class="usuario container-fluid py-3">
+        <h3 class="ms-3">🚻 Nome do usuário</h3>
+    </div>
+
+    <hr>
+
+    <div class="container-fluid">
+        <div class="row">
+
+            <!-- MENU LATERAL -->
+            <div id="menuLateral" class="col-lg-2 col-md-3 col-12 text-center">
+
+                <a href="telacomunidade.html">
+                    <img src="comunidades.png" class="img-fluid mb-2" alt="">
+                    <p>Comunidades</p>
+                </a>
+
+                <a href="telaGrupo.html">
+                    <img src="grupos.png" class="img-fluid mb-2" id="grupo" alt="">
+                    <p>Grupos</p>
+                </a>
+
+                <a href="">
+                    <img src="biblioteca.png" class="img-fluid mb-2" alt="">
+                    <p>Minha Biblioteca </p>
+                </a>
+
+                <img src="Logo trabalho.jpeg" class="logo mt-5" alt="Logo">
+
+            </div>
+
+
+            <!-- CONTEÚDO PRINCIPAL -->
+            <main class="col-lg-10 col-md-9 col-12">
+
+                <div id="banner">
+                    <h2 id="textoBanner">Minha biblioteca!📚</h2>
+                    <br>
+                    <button type="button" class="botoes" id="cadastro" onclick="cadastrar()">Cadastrar Livro!</button>
+                </div>
+
+                <br>
+
+                <div class="estadoLeitura">
+                    <button type="button" id="lendo" class="botoes" onclick="lendo()">
+                        Lendo
+                       
+                    </button>
+
+                    <button type="button" id="lido" class="botoes" onclick="lido()">
+                        Lido
+                    </button>
+
+                    <button type="button" id="queroLer" class="botoes" onclick="queroLer()">
+                        Quero Ler
+                    </button>
+                </div>
+
+                <br>
+
+                <div id="biblioteca">
+                    <div class="d-flex flex-wrap gap-3">
+                        <img src="https://m.media-amazon.com/images/I/71SYepTUsDL._AC_UF1000,1000_QL80_.jpg" class="img-fluid livro" alt="">
+                        <img src="https://m.media-amazon.com/images/I/51tHMjZsH2L._SY445_SX342_ML2_.jpg" class="img-fluid livro">
+
+                    </div>
+                </div>
+
+            </main>
+
+        </div>
+    </div>
+
+    <script>
+        function lendo() {
+            window.location.href = "lendo.html";
+
+        }
+
+        function cadastrar() {
+            window.location.href = "inserirLivro.html";
+        }
+
+        function queroLer() {
+            window.location.href = "queroler.html"
+        }
+
+        function lido() {
+            window.location.href = "lido.html"
+        }
+
+        function cadastrar() {
+            window.location.href = "cadastroLivro.html"
+        }
+    </script>
+
+</body>
+
+</html>
