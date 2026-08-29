@@ -11,7 +11,7 @@
             background-color: #F3DDC8;
             font-family: Arial, Helvetica, sans-serif;
         }
-        
+
         .janela {
             position: fixed;
             top: 50%;
@@ -23,7 +23,7 @@
             border-radius: 10px;
             box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
         }
-        
+
         .janela input,
         .janela select {
             width: 100%;
@@ -31,7 +31,7 @@
             margin-bottom: 15px;
             box-sizing: border-box;
         }
-        
+
         .janela button {
             padding: 8px 15px;
             cursor: pointer;
@@ -41,8 +41,7 @@
 
 <body>
 
-    <div class="janela" id="cadastrar">
-
+    <div class="janela">
         <h2>Cadastrar Livro</h2>
 
         <label>Nome do livro:</label>
@@ -75,68 +74,102 @@
 
         <br><br>
 
-        <button id="salvar">Salvar</button>
-        <button id="voltar">Voltar</button>
-
+        <button type="button" id="salvar">Salvar</button>
+        <button type="button" id="voltar">Voltar</button>
     </div>
 
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 
     <script>
         var cont = parseInt(localStorage.getItem("valor")) || 0;
+        let livroEditar = localStorage.getItem("livroEditar");
 
-        $("#salvar").click(function() {
+        if (livroEditar !== null) {
+            let livroJSON = localStorage.getItem("livro" + livroEditar);
 
+            if (livroJSON) {
+                let livro = JSON.parse(livroJSON);
+
+                $("#nomeLivro").val(livro.nome);
+                $("#autorLivro").val(livro.autor);
+                $("#editoraLivro").val(livro.editora);
+                $("#paginasLivro").val(livro.paginas);
+                $("#paginasLidas").val(livro.paginasLidas);
+                $("#generoLivro").val(livro.genero);
+                $("#statusLivro").val(livro.status);
+                $("#imagem").val(livro.imagem);
+            }
+        }
+
+        $("#salvar").click(function () {
             salvar();
-
         });
 
-        $("#voltar").click(function() {
-
+        $("#voltar").click(function () {
+            localStorage.removeItem("livroEditar");
             window.location.href = "minhaBiblioteca.html";
-
         });
 
         function salvar() {
+            let nome = $("#nomeLivro").val().trim();
+            let autor = $("#autorLivro").val().trim();
+            let editora = $("#editoraLivro").val().trim();
+            let paginas = $("#paginasLivro").val();
+            let paginasLidas = $("#paginasLidas").val();
+            let genero = $("#generoLivro").val().trim();
+            let status = $("#statusLivro").val();
+            let imagem = $("#imagem").val().trim();
+
+            if (
+                nome == "" ||
+                autor == "" ||
+                editora == "" ||
+                paginas == "" ||
+                paginasLidas == "" ||
+                genero == "" ||
+                imagem == ""
+            ) {
+                alert("Preencha todos os campos!");
+                return;
+            }
 
             let livro = {
-
-                nome: $("#nomeLivro").val(),
-
-                autor: $("#autorLivro").val(),
-
-                editora: $("#editoraLivro").val(),
-
-                paginas: $("#paginasLivro").val(),
-
-                paginasLidas: $("#paginasLidas").val(),
-
-                genero: $("#generoLivro").val(),
-
-                status: $("#statusLivro").val(),
-
-                imagem: $("#imagem").val()
-
+                nome: nome,
+                autor: autor,
+                editora: editora,
+                paginas: paginas,
+                paginasLidas: paginasLidas,
+                genero: genero,
+                status: status,
+                imagem: imagem
             };
 
-            let livroJSON = JSON.stringify(livro);
+            if (livroEditar !== null) {
+                localStorage.setItem(
+                    "livro" + livroEditar,
+                    JSON.stringify(livro)
+                );
 
-            localStorage.setItem(
-                "livro" + cont,
-                livroJSON
-            );
+                localStorage.removeItem("livroEditar");
+                alert("Livro atualizado!");
+            } else {
+                localStorage.setItem(
+                    "livro" + cont,
+                    JSON.stringify(livro)
+                );
 
-            cont++;
+                cont++;
+                localStorage.setItem("valor", cont);
+                alert("Livro cadastrado!");
+            }
 
-            localStorage.setItem(
-                "valor",
-                cont
-            );
-
-            alert("Livro cadastrado!");
-
-            window.location.href = "minhaBiblioteca.html";
-
+            if (status == "Lendo") {
+                window.location.href = "lendo.html";
+            } else if (status == "Quero Ler") {
+                window.location.href = "queroLer.html";
+            } else if (status == "Lido") {
+                window.location.href = "lido.html";
+            }
         }
     </script>
 
